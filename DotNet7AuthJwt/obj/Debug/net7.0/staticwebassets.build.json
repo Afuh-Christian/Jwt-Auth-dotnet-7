@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "4M6PsTbOJVBnSxrvUQ8yBInkTadlxqTJK6Kt+H0MPJU=",
+  "Source": "DotNet7AuthJwt",
+  "BasePath": "_content/DotNet7AuthJwt",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
