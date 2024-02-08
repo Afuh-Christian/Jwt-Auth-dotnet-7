@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DotNet7AuthJwt.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Authorize(Roles ="Admin,User")]
     public class WeatherForecastController : ControllerBase
     {
         private static readonly string[] Summaries = new[]

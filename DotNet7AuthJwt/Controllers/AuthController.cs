@@ -1,8 +1,11 @@
 ﻿using BCrypt.Net;
 using DotNet7AuthJwt.Models;
+using DotNet7AuthJwt.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -11,16 +14,21 @@ namespace DotNet7AuthJwt.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
+ 
     public class AuthController : ControllerBase
     {
         public static User user = new User();
 
-        public AuthController(IConfiguration configuration)
+
+        public AuthController(IConfiguration configuration
+            , IUserServiceApp userService
+            )
         {
             this._configuration = configuration;
+           this.userService = userService;
         }
-
-        private IConfiguration _configuration;
+        private readonly IUserServiceApp userService;
+        private readonly IConfiguration _configuration;
 
         [HttpPost]
         public ActionResult<User> Register(UserDto request)
@@ -53,14 +61,23 @@ namespace DotNet7AuthJwt.Controllers
         }
 
 
-        
 
+        [HttpGet , Authorize]
+        public ActionResult<string> GetName()
+        {
+            return Ok(this.userService.GetName());
+        }
+
+
+        
         private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
             {
-                    new Claim(ClaimTypes.Name , user.Username)
-            };
+                    new (ClaimTypes.Name , user.Username),
+                    new Claim(ClaimTypes.Role , "User") ,  //// New role added ... Or we can do this in the user models itself ... 
+                    new Claim(ClaimTypes.Role , "Admin") , 
+                };
 
             /// Get key fron appsettings.json and encode . 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration.GetSection("AppSettings:Token").Value!));

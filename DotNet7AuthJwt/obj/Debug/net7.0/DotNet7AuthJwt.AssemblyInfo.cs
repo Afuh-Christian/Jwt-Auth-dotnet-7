@@ -11,10 +11,11 @@
 using System;
 using System.Reflection;
 
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("160fd479-0b06-46e7-9820-27ee12f40b97")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("DotNet7AuthJwt")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a64f8070e16fbaffc1ab5523f730096496ad45fe")]
 [assembly: System.Reflection.AssemblyProductAttribute("DotNet7AuthJwt")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DotNet7AuthJwt")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

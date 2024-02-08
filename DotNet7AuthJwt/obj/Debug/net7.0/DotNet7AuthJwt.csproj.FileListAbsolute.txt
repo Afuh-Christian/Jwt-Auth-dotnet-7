@@ -37,3 +37,11 @@ H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.Ide
 H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.IdentityModel.Logging.dll
 H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.IdentityModel.Tokens.dll
 H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\System.IdentityModel.Tokens.Jwt.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\obj\Debug\net7.0\DotNet7AuthJwt.sourcelink.json
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Microsoft.Extensions.DependencyModel.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Scrutor.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.dll
+H:\My Files\Asp.net\DotNet7AuthJwt\DotNet7AuthJwt\bin\Debug\net7.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
