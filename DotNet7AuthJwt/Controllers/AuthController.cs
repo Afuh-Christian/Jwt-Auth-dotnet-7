@@ -8,6 +8,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Diagnostics;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DotNet7AuthJwt.Controllers
@@ -17,7 +18,7 @@ namespace DotNet7AuthJwt.Controllers
  
     public class AuthController : ControllerBase
     {
-        public static User user = new User();
+        private  User user = new();
 
 
         public AuthController(IConfiguration configuration
@@ -55,7 +56,9 @@ namespace DotNet7AuthJwt.Controllers
                 return BadRequest("Wrong Password");
             }
 
-            string token = CreateToken(user); 
+            string token = CreateToken(user);
+            var refreshToken = GenerateRefreshToken();
+            SetRefreshToken(refreshToken);
 
             return Ok(token);
         }
@@ -69,7 +72,57 @@ namespace DotNet7AuthJwt.Controllers
         }
 
 
-        
+
+        // To Generate a new refresh token .... 
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<string>> RefreshToken()
+        {
+
+            var refreshToken = Request.Cookies["refreshToken"];
+            if (!user.RefreshToken.Equals(refreshToken))
+            {
+                return (Unauthorized("Invalid Refresh Token"));
+            }
+            else if (user.TokenExpires < DateTime.Now)
+            {
+                return (Unauthorized("Token expired"));
+            }
+
+            string token = CreateToken(user);
+            var newRefreshToken = GenerateRefreshToken();
+            SetRefreshToken(newRefreshToken);
+
+            return Ok(token);
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+        // Create access token 
         private string CreateToken(User user)
         {
             List<Claim> claims = new List<Claim>
@@ -88,7 +141,7 @@ namespace DotNet7AuthJwt.Controllers
             // Generate Token 
             var token = new JwtSecurityToken(
                 claims: claims , 
-                expires:DateTime.Now.AddDays(1), //one day from now
+                expires:DateTime.Now.AddHours(1), //one day from now
                 signingCredentials: creds 
                 );
 
@@ -98,5 +151,55 @@ namespace DotNet7AuthJwt.Controllers
             return jwt;
                 
         }
+
+
+
+
+
+
+
+        // Generate Refresh Token 
+       
+        private  RefreshToken GenerateRefreshToken()
+        {
+
+
+            var refreshToken = new RefreshToken
+            {
+                // RandomNumberGenerator from system.Cryptography
+                Token =  Convert.ToBase64String(RandomNumberGenerator.GetBytes(64))
+                , Expires = DateTime.Now.AddDays(1)
+            };
+
+            return refreshToken;
+
+
+        }
+
+
+
+
+
+
+
+        // Store refresh token in cookies . 
+        private void SetRefreshToken(RefreshToken newRefreshToken)
+        {
+            // Cookie option ... httponly  = true . 
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Expires = newRefreshToken.Expires
+            };
+            Response.Cookies.Append("refreshToken" , newRefreshToken.Token , cookieOptions);
+
+            user.RefreshToken = newRefreshToken.Token;
+            user.TokenCreated = newRefreshToken.Created; 
+            user.TokenExpires = newRefreshToken.Expires;
+
+            // This code will store the refresh token in the cookies . 
+        }
+
+    
     }
 }
